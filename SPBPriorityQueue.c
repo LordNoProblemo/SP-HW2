@@ -1,9 +1,5 @@
 #include<stdio.h>
 #include "SPBPriorityQueue.h"
-
-//TODO Add function of create new element in Queue
-//TODO use % when adding new element (it may be in index greater then capacity)
-
 //Define the struct of queue
 struct sp_bp_queue_t{
 	int capacity; // The capacity of the queue
@@ -16,10 +12,10 @@ struct sp_bp_queue_t{
 SPBPQueue* spBPQueueCreate(int maxSize)
 {
 	SPBPQueue* ret = (SPBPQueue*)malloc(sizeof(SPBPQueue));
-	ret->MinIndex=-1;//Queue is empty
-	ret->size=0;//Queue is empty
-	ret->capacity=maxSize;
-	ret->elements=(BPQueueElement*)malloc(sizeof(BPQueueElement)*maxSize);//Initialize memory for the array with size maxSize
+	ret->MinIndex = -1;//Queue is empty
+	ret->size = 0;//Queue is empty
+	ret->capacity = maxSize;
+	ret->elements = (BPQueueElement*)malloc(sizeof(BPQueueElement)*maxSize);//Initialize memory for the array with size maxSize
 	return ret;
 }
 
@@ -30,7 +26,7 @@ SPBPQueue* spBPQueueCreate(int maxSize)
  */
 int MaxIndex(SPBPQueue* source)
 {
-	return source->MinIndex+source->size-1;
+	return source->MinIndex + source->size-1;
 }
 
 SPBPQueue* spBPQueueCopy(SPBPQueue* source)
@@ -41,13 +37,13 @@ SPBPQueue* spBPQueueCopy(SPBPQueue* source)
 	ret->capacity = source->capacity;
 	ret->elements = (BPQueueElement*)malloc(sizeof(source->elements));//Initialize memory for the elements
 	// Updates the elements of ret to be the same as those of source
-	int i=0;
+	int i = 0;
 
-	for(;i<ret->size;i++)
+	for(; i < ret->size ; i++)
 	{
-		ret->elements[i+ret->MinIndex]=(BPQueueElement*)malloc(sizeof(BPQueueElement));
-		ret->elements[i+ret->MinIndex]->index =source->elements[i+ret->MinIndex]->index;
-		ret->elements[i+ret->MinIndex]->value =source->elements[i+ret->MinIndex]->value;
+		ret->elements[i+ret->MinIndex] = (BPQueueElement*)malloc(sizeof(BPQueueElement));
+		ret->elements[i+ret->MinIndex]->index = source->elements[i+ret->MinIndex]->index;
+		ret->elements[i+ret->MinIndex]->value = source->elements[i+ret->MinIndex]->value;
 	}
 	return ret;
 }
@@ -64,23 +60,23 @@ int spBPQueueGetMaxSize(SPBPQueue* source)
 
 bool spBPQueueIsEmpty(SPBPQueue* source)
 {
-	return source->size==0;
+	return source->size == 0;
 }
 
 bool spBPQueueIsFull(SPBPQueue* source)
 {
-	return source->size==source->capacity;
+	return source->size == source->capacity;
 }
 
 SP_BPQUEUE_MSG spBPQueueDequeue(SPBPQueue* source)
 {
-	if(source == NULL || *source==NULL)
+	if(source == NULL || *source == NULL)
 		return SP_BPQUEUE_INVALID_ARGUMENT;
 	if(spBPQueueIsEmpty(source))
 		return SP_BPQUEUE_EMPTY;
-	//BPQueueElement* lowest=source->elements[source->MinIndex];
-	//free(lowest);
-	source->elements[source->MinIndex]=NULL;
+	BPQueueElement* lowest = source->elements[source->MinIndex];
+	free(lowest);
+	source->elements[source->MinIndex] = NULL;
 	source->size--;
 	if(source->size==0)
 		source->MinIndex = -1;
@@ -102,7 +98,7 @@ double spBPQueueMaxValue(SPBPQueue* source)
 
 SP_BPQUEUE_MSG spBPQueuePeekLast(SPBPQueue* source, BPQueueElement* res)
 {
-	if(source == NULL || *source==NULL)
+	if(source == NULL || *source == NULL)
 		return SP_BPQUEUE_INVALID_ARGUMENT;
 	if(spBPQueueIsEmpty(source))
 		return SP_BPQUEUE_EMPTY;
@@ -114,7 +110,7 @@ SP_BPQUEUE_MSG spBPQueuePeekLast(SPBPQueue* source, BPQueueElement* res)
 
 SP_BPQUEUE_MSG spBPQueuePeek(SPBPQueue* source, BPQueueElement* res)
 {
-	if(source == NULL || *source==NULL)
+	if(source == NULL || *source == NULL)
 		return SP_BPQUEUE_INVALID_ARGUMENT;
 	if(spBPQueueIsEmpty(source))
 		return SP_BPQUEUE_EMPTY;
@@ -127,11 +123,11 @@ SP_BPQUEUE_MSG spBPQueuePeek(SPBPQueue* source, BPQueueElement* res)
 void spBPQueueClear(SPBPQueue* source)
 {
 	int i = 0;
-	for(;i<source->capacity;i++)
+	for(; i < source->capacity ; i++)
 	{
 		if(source->elements[i] != NULL && *(source->elements[i]) != NULL)
 		{
-			//free(source->elements[i]);
+			free(source->elements[i]);
 			source->elements[i] = NULL;
 		}
 	}
@@ -140,7 +136,7 @@ void spBPQueueClear(SPBPQueue* source)
 void spBPQueueDestroy(SPBPQueue* source)
 {
 	int i = 0;
-	for(;i<source->capacity;i++)
+	for(; i < source->capacity ; i++)
 	{
 		if(source->elements[i] != NULL && *(source->elements[i]) != NULL)
 		{
@@ -167,122 +163,123 @@ void spBPQueueDestroy(SPBPQueue* source)
  */
 int findPlace(BPQueueElement* array, int start, int end, double value)
 {
-	if(value<=array[start]->value)
+	if(value <= array[start]->value)
 		return start-1;
-	if(value>=array[end]->value)
-		return end+1;
-	int lowBound=start;
-	int highBound=end;
-	while(!((array[(lowBound+highBound)/2-1]->value)<value<=(array[(lowBound+highBound)/2]->value)))
+	if(value >= array[end]->value)
+		return end + 1;
+	int lowBound = start;
+	int highBound = end;
+	while(!((array[(lowBound + highBound) / 2 - 1]->value) < value <= (array[(lowBound + highBound) / 2]->value)))
 	{
-		if(value>(array[(lowBound+highBound)/2]->value))
-			lowBound = (lowBound+highBound)/2;
+		if(value > (array[(lowBound + highBound) / 2]->value))
+			lowBound = (lowBound + highBound) / 2;
 		else
-			highBound = (lowBound+highBound)/2;
+			highBound = (lowBound + highBound) / 2;
 	}
-	return (lowBound+highBound)/2;
+	return (lowBound + highBound) / 2;
 }
 
 
 SP_BPQUEUE_MSG spBPQueueEnqueue(SPBPQueue* source, int index, double value)
 {
-	if(source == NULL || *source==NULL)
+	if(source == NULL || *source == NULL)
 			return SP_BPQUEUE_INVALID_ARGUMENT;
 
 	if(spBPQueueIsEmpty(source))
 	{
-		source->MinIndex=0;
-		source->size=1;
-		source->elements[0]=(BPQueueElement*)malloc(sizeof(BPQueueElement));
-		source->elements[0]->index=index;
-		source->elements[0]->value=value;
+		source->MinIndex = 0;
+		source->size = 1;
+		source->elements[0] = (BPQueueElement*)malloc(sizeof(BPQueueElement));
+		source->elements[0]->index = index;
+		source->elements[0]->value = value;
 		return SP_BPQUEUE_SUCCESS;
 	}
 	int insertIndex = findPlace(source->elements,source->MinIndex,MaxIndex(source),value);
-	if(insertIndex>MaxIndex(source))
+	if(insertIndex > MaxIndex(source))
 	{
 		if(spBPQueueIsFull(source))
 			return SP_BPQUEUE_FULL;
-		if(MaxIndex(source)==source->capacity-1)
+		if(MaxIndex(source) == source->capacity - 1)
 		{
-			for(int i = source->MinIndex;i<=source->capacity-1;i++)
+			for(int i = source->MinIndex ; i <= source->capacity-1 ; i++)
 			{
-				if(i==0)
+				if(i == 0)
 					return SP_BPQUEUE_OUT_OF_MEMORY;
-				source->elements[i-1]=source->elements[i];
+				source->elements[i - 1] = source->elements[i];
 			}
 			source->MinIndex--;
 			source->size++;
-			source->elements[source->capacity-1]=(BPQueueElement*)malloc(sizeof(BPQueueElement));
-			source->elements[source->capacity-1]->index=index;
-			source->elements[source->capacity-1]->value=value;
+			source->elements[source->capacity - 1] = (BPQueueElement*)malloc(sizeof(BPQueueElement));
+			source->elements[source->capacity-1]->index = index;
+			source->elements[source->capacity-1]->value = value;
 		}
 		else
 		{
-			//need to move elements after the one you added
-			source->elements[insertIndex]=(BPQueueElement*)malloc(sizeof(BPQueueElement));
-			source->elements[insertIndex]->index=index;
-			source->elements[insertIndex]->value=value;
+			source->elements[insertIndex] = (BPQueueElement*)malloc(sizeof(BPQueueElement));
+			source->elements[insertIndex]->index = index;
+			source->elements[insertIndex]->value = value;
 		}
 		return SP_BPQUEUE_SUCCESS;
 	}
 
-	if(insertIndex<source->MinIndex)
+	if(insertIndex < source->MinIndex)
 	{
-		if(source->MinIndex>0)
+		if(source->MinIndex > 0)
 		{
 			source->MinIndex--;
-			source->elements[insertIndex]=(BPQueueElement*)malloc(sizeof(BPQueueElement));
-			source->elements[insertIndex]->index=index;
-			source->elements[insertIndex]->value=value;
+			source->elements[insertIndex] = (BPQueueElement*)malloc(sizeof(BPQueueElement));
+			source->elements[insertIndex]->index = index;
+			source->elements[insertIndex]->value = value;
 			source->size++;
 		}
 		else
 		{
 			if(spBPQueueIsFull(source))
 			{
+				free(source->elements[source->capacity - 1]);
 				source->size--;
 			}
-			for(int i = MaxIndex(source);i>=0;i++)
+			for(int i = MaxIndex(source) ; i >= 0 ; i++)
 			{
-				if(i>=source->capacity)
+				if(i >= source->capacity)
 					return SP_BPQUEUE_OUT_OF_MEMORY;
-				source->elements[i+1]=source->elements[i];
+				source->elements[i + 1] = source->elements[i];
 			}
-			source->elements[0]=(BPQueueElement*)malloc(sizeof(BPQueueElement));
-			source->elements[0]->index=index;
-			source->elements[0]->value=value;
+			source->elements[0] = (BPQueueElement*)malloc(sizeof(BPQueueElement));
+			source->elements[0]->index = index;
+			source->elements[0]->value = value;
 			source->size++;
 		}
 		return SP_BPQUEUE_SUCCESS;
 	}
 	if(spBPQueueIsFull(source))
 	{
+		free(source->elements[source->capacity - 1]);
 		source->size--;
 	}
-	if(MaxIndex(source)<source->capacity-1)
+	if(MaxIndex(source) < source->capacity - 1)
 	{
-		for(int i = MaxIndex(source);i>=insertIndex;i++)
+		for(int i = MaxIndex(source) ; i >= insertIndex ; i++)
 		{
-			if(i>=source->capacity)
+			if(i >= source->capacity)
 				return SP_BPQUEUE_OUT_OF_MEMORY;
-			source->elements[i+1]=source->elements[i];
+			source->elements[i + 1] = source->elements[i];
 		}
 	}
 	else
 	{
-		for(int i = source->MinIndex;i<=insertIndex;i++)
+		for(int i = source->MinIndex ; i <= insertIndex ; i++)
 		{
 			if(i==0)
 				return SP_BPQUEUE_OUT_OF_MEMORY;
-			source->elements[i-1]=source->elements[i];
+			source->elements[i - 1] = source->elements[i];
 		}
 		source->MinIndex--;
 	}
 	source->size++;
-	source->elements[insertIndex]=(BPQueueElement*)malloc(sizeof(BPQueueElement));
-	source->elements[insertIndex]->index=index;
-	source->elements[insertIndex]->value=value;
+	source->elements[insertIndex] = (BPQueueElement*)malloc(sizeof(BPQueueElement));
+	source->elements[insertIndex]->index = index;
+	source->elements[insertIndex]->value = value;
 	return SP_BPQUEUE_SUCCESS;
 }
 
