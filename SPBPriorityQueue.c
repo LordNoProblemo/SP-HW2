@@ -19,6 +19,21 @@ SPBPQueue* spBPQueueCreate(int maxSize)
 	return ret;
 }
 
+/*
+ * Creates new element of queue
+ * @param index - the index of new element
+ * @param val - the value of new element
+ * @return
+ * The new element
+ */
+BPQueueElement* createElement(int index, double val)
+{
+	BPQueueElement* ret = (BPQueueElement*)malloc(sizeof(BPQueueElement));
+	ret->index = index;
+	ret->value = val;
+	return ret;
+}
+
 /**
  * Returns the index of element with max value in queue in the array
  * @param source - the queue
@@ -41,9 +56,7 @@ SPBPQueue* spBPQueueCopy(SPBPQueue* source)
 
 	for(; i < ret->size ; i++)
 	{
-		ret->elements[i+ret->MinIndex] = (BPQueueElement*)malloc(sizeof(BPQueueElement));
-		ret->elements[i+ret->MinIndex]->index = source->elements[i+ret->MinIndex]->index;
-		ret->elements[i+ret->MinIndex]->value = source->elements[i+ret->MinIndex]->value;
+		ret->elements[i+ret->MinIndex] = createElement(source->elements[i+ret->MinIndex]->index,source->elements[i+ret->MinIndex]->value);
 	}
 	return ret;
 }
@@ -102,9 +115,7 @@ SP_BPQUEUE_MSG spBPQueuePeekLast(SPBPQueue* source, BPQueueElement* res)
 		return SP_BPQUEUE_INVALID_ARGUMENT;
 	if(spBPQueueIsEmpty(source))
 		return SP_BPQUEUE_EMPTY;
-	res = (BPQueueElement*)malloc(sizeof(BPQueueElement));
-	res->index = source->elements[MaxIndex(source)]->index;
-	res->value = source->elements[MaxIndex(source)]->value;
+	res = createElement(source->elements[MaxIndex(source)]->index,source->elements[MaxIndex(source)]->value);
 	return SP_BPQUEUE_SUCCESS;
 }
 
@@ -114,9 +125,7 @@ SP_BPQUEUE_MSG spBPQueuePeek(SPBPQueue* source, BPQueueElement* res)
 		return SP_BPQUEUE_INVALID_ARGUMENT;
 	if(spBPQueueIsEmpty(source))
 		return SP_BPQUEUE_EMPTY;
-	res = (BPQueueElement*)malloc(sizeof(BPQueueElement));
-	res->index = source->elements[source->MinIndex]->index;
-	res->value = source->elements[source->MinIndex]->value;
+	res = createElement(source->elements[source->MinIndex]->index,source->elements[source->MinIndex]->value);
 	return SP_BPQUEUE_SUCCESS;
 }
 
@@ -189,9 +198,7 @@ SP_BPQUEUE_MSG spBPQueueEnqueue(SPBPQueue* source, int index, double value)
 	{
 		source->MinIndex = 0;
 		source->size = 1;
-		source->elements[0] = (BPQueueElement*)malloc(sizeof(BPQueueElement));
-		source->elements[0]->index = index;
-		source->elements[0]->value = value;
+		source->elements[0] = createElement(index,value);
 		return SP_BPQUEUE_SUCCESS;
 	}
 	int insertIndex = findPlace(source->elements,source->MinIndex,MaxIndex(source),value);
@@ -209,15 +216,11 @@ SP_BPQUEUE_MSG spBPQueueEnqueue(SPBPQueue* source, int index, double value)
 			}
 			source->MinIndex--;
 			source->size++;
-			source->elements[source->capacity - 1] = (BPQueueElement*)malloc(sizeof(BPQueueElement));
-			source->elements[source->capacity-1]->index = index;
-			source->elements[source->capacity-1]->value = value;
+			source->elements[source->capacity - 1] = createElement(index,value);
 		}
 		else
 		{
-			source->elements[insertIndex] = (BPQueueElement*)malloc(sizeof(BPQueueElement));
-			source->elements[insertIndex]->index = index;
-			source->elements[insertIndex]->value = value;
+			source->elements[insertIndex] = createElement(index,value);
 		}
 		return SP_BPQUEUE_SUCCESS;
 	}
@@ -227,9 +230,7 @@ SP_BPQUEUE_MSG spBPQueueEnqueue(SPBPQueue* source, int index, double value)
 		if(source->MinIndex > 0)
 		{
 			source->MinIndex--;
-			source->elements[insertIndex] = (BPQueueElement*)malloc(sizeof(BPQueueElement));
-			source->elements[insertIndex]->index = index;
-			source->elements[insertIndex]->value = value;
+			source->elements[insertIndex] = createElement(index,value);
 			source->size++;
 		}
 		else
@@ -245,9 +246,7 @@ SP_BPQUEUE_MSG spBPQueueEnqueue(SPBPQueue* source, int index, double value)
 					return SP_BPQUEUE_OUT_OF_MEMORY;
 				source->elements[i + 1] = source->elements[i];
 			}
-			source->elements[0] = (BPQueueElement*)malloc(sizeof(BPQueueElement));
-			source->elements[0]->index = index;
-			source->elements[0]->value = value;
+			source->elements[0] = createElement(index,value);
 			source->size++;
 		}
 		return SP_BPQUEUE_SUCCESS;
@@ -277,9 +276,7 @@ SP_BPQUEUE_MSG spBPQueueEnqueue(SPBPQueue* source, int index, double value)
 		source->MinIndex--;
 	}
 	source->size++;
-	source->elements[insertIndex] = (BPQueueElement*)malloc(sizeof(BPQueueElement));
-	source->elements[insertIndex]->index = index;
-	source->elements[insertIndex]->value = value;
+	source->elements[insertIndex] = createElement(index,value);
 	return SP_BPQUEUE_SUCCESS;
 }
 
