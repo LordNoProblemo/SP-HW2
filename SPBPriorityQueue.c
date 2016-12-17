@@ -48,11 +48,9 @@ int MaxIndex(SPBPQueue* source)
 
 SPBPQueue* spBPQueueCopy(SPBPQueue* source)
 {
-	SPBPQueue* ret = (SPBPQueue*)malloc(sizeof(SPBPQueue));//Initialize memory for the new Queue
+	SPBPQueue* ret = spBPQueueCreate(source->capacity);//Initialize memory for the elements
 	ret->MinIndex = source->MinIndex;
 	ret->size = source->size;
-	ret->capacity = source->capacity;
-	ret->elements = (BPQueueElement*)malloc(sizeof(source->elements));//Initialize memory for the elements
 	// Updates the elements of ret to be the same as those of source
 	int i = 0;
 
