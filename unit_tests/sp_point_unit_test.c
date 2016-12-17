@@ -2,7 +2,6 @@
 #include "unit_test_util.h"
 #include <stdbool.h>
 
-#define SQRT_2 1.41421356237309504880168872420969807
 
 //Checks if copy Works
 bool pointBasicCopyTest() {
@@ -36,8 +35,8 @@ bool pointBasicL2Distance() {
 	spPointDestroy(q);
 	return true;
 }
-int main() {
-	RUN_TEST(pointBasicCopyTest);
-	RUN_TEST(pointBasicL2Distance);
-	return 0;
-}
+//int main() {
+//	RUN_TEST(pointBasicCopyTest);
+//	RUN_TEST(pointBasicL2Distance);
+//	return 0;
+//}
