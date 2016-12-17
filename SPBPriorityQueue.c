@@ -224,7 +224,7 @@ SP_BPQUEUE_MSG spBPQueueEnqueue(SPBPQueue* source, int index, double value)
 			{
 				source->size--;
 			}
-			for(int i = MaxIndex(source) ; i >= 0 ; i++)
+			for(int i = MaxIndex(source) ; i >= 0 ; i--)
 			{
 				if(i >= source->capacity)
 					return SP_BPQUEUE_OUT_OF_MEMORY;
@@ -241,7 +241,7 @@ SP_BPQUEUE_MSG spBPQueueEnqueue(SPBPQueue* source, int index, double value)
 	}
 	if(MaxIndex(source) < source->capacity - 1)
 	{
-		for(int i = MaxIndex(source) ; i >= insertIndex ; i++)
+		for(int i = MaxIndex(source) ; i >= insertIndex ; i--)
 		{
 			if(i >= source->capacity)
 				return SP_BPQUEUE_OUT_OF_MEMORY;

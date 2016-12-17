@@ -14,15 +14,15 @@ bool testBPQCopy()
 	ASSERT_TRUE(spBPQueueGetMaxSize(q1)==3);
 	ASSERT_TRUE(spBPQueueSize(q1)==3);
 	ASSERT_TRUE(spBPQueueMinValue(q1)==4);
-	ASSERT_TRUE(spBPQueueMaxValue(q1)==4);
+	ASSERT_TRUE(spBPQueueMaxValue(q1)==6);
 	SPBPQueue* q2 = spBPQueueCopy(q1);
 	ASSERT_TRUE(spBPQueueGetMaxSize(q2)==3);
 	ASSERT_TRUE(spBPQueueSize(q2)==3);
 	ASSERT_TRUE(spBPQueueMinValue(q2)==4);
-	ASSERT_TRUE(spBPQueueMaxValue(q2)==4);
+	ASSERT_TRUE(spBPQueueMaxValue(q2)==6);
 	spBPQueueDequeue(q1);
 	ASSERT_TRUE(spBPQueueGetMaxSize(q1)==3);
-	ASSERT_TRUE(spBPQueueSize(q1)==3);
+	ASSERT_TRUE(spBPQueueSize(q1)==2);
 	ASSERT_TRUE(spBPQueueMinValue(q1)==5);
 	spBPQueueDestroy(q1);
 	spBPQueueDestroy(q2);
