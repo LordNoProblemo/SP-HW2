@@ -50,7 +50,7 @@ SPPoint* spPointCreate(double* data, int dim, int index);
  * - index(P) = index(source) (P and source have the same index)
  *
  * @param source - The source point
- * @assert (source != NUlL)
+ * @assert (source != NULL)
  * @return
  * NULL in case memory allocation occurs
  * Others a copy of source is returned.

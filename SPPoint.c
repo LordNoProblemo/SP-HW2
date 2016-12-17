@@ -6,9 +6,9 @@
  */
 
 #include "SPPoint.h"
+#include <stdlib.h>
+#include <string.h>
 #include <assert.h>
-
-#define NULL 0 // NULL pointer value
 
 struct sp_point_t
 {
@@ -23,7 +23,7 @@ SPPoint* spPointCreate(double* data, int dim, int index)
 	SPPoint * p = (SPPoint *) malloc(sizeof(SPPoint));
 	p->dim = dim; // initialize dim
 	p->data = (double *) malloc(sizeof(double) * dim);
-	memcpy(p->data, data, dim); // initialize data
+	memcpy(p->data, data, dim * sizeof(double)); // initialize data
 	p->index = index; // initialize index
 	return p;
 }
@@ -55,13 +55,13 @@ int spPointGetIndex(SPPoint* point)
 
 double spPointGetAxisCoor(SPPoint* point, int axis)
 {
-	assert (point!=NULL && axis < dim(point));
+	assert (point!=NULL && axis < point->dim);
 	return point->data[axis];
 }
 
 double spPointL2SquaredDistance(SPPoint* p, SPPoint* q)
 {
-	assert (p!=NULL && q!=NULL && dim(p) == dim(q));
+	assert (p!=NULL && q!=NULL && p->dim == p->dim);
 	double l2 = 0;
 	int i = 0;
 	for(i = 0; i < p->dim; i++)
