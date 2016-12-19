@@ -28,8 +28,31 @@ bool testBPQCopy()
 	spBPQueueDestroy(q2);
 	return true;
 }
+
+bool testBPQClear()
+{
+    SPBPQueue* cleared = spBPQueueCreate(5);
+    SPBPQueue* notCleared = spBPQueueCreate(5);
+    ASSERT_TRUE(spBPQueueGetMaxSize(notCleared) == spBPQueueGetMaxSize(cleared));
+    spBPQueueEnqueue(notCleared,1,42);
+    spBPQueueEnqueue(notCleared,3,43);
+    spBPQueueEnqueue(notCleared,6,42.5);
+    spBPQueueEnqueue(notCleared,-10,0);
+    ASSERT_TRUE(spBPQueueSize(notCleared) == 4);
+    ASSERT_TRUE(spBPQueueMaxValue(notCleared) == 43);
+    ASSERT_TRUE(spBPQueueMinValue(notCleared) == 0);
+    spBPQueueDequeue(notCleared);
+    ASSERT_TRUE(spBPQueueMinValue(notCleared) == 42);
+    spBPQueueClear(notCleared);
+    ASSERT_TRUE(spBPQueueIsEmpty(notCleared));
+    spBPQueueDestroy(cleared);
+    spBPQueueDestroy(notCleared);
+    return true;
+
+}
 int main()
 {
 	RUN_TEST(testBPQCopy);
+	RUN_TEST(testBPQClear);
 	return 0;
 }

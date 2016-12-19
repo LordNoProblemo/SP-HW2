@@ -87,6 +87,8 @@ SP_BPQUEUE_MSG spBPQueueDequeue(SPBPQueue* source)
 		return SP_BPQUEUE_INVALID_ARGUMENT;
 	if(spBPQueueIsEmpty(source))
 		return SP_BPQUEUE_EMPTY;
+    source->elements[source->MinIndex].index = 0;
+    source->elements[source->MinIndex].value = 0;
 	source->size--;
 	if(source->size==0)
 		source->MinIndex = -1;
@@ -134,6 +136,8 @@ void spBPQueueClear(SPBPQueue* source)
 		source->elements[i].index = 0;
 		source->elements[i].value = 0;
 	}
+	source->size = 0;
+	source->MinIndex = -1;
 }
 
 void spBPQueueDestroy(SPBPQueue* source)
@@ -159,16 +163,11 @@ int findPlace(BPQueueElement* array, int start, int end, double value)
 		return start-1;
 	if(value >= array[end].value)
 		return end + 1;
-	int lowBound = start;
-	int highBound = end;
-	while(!((array[(lowBound + highBound) / 2 - 1].value) < value && value <= (array[(lowBound + highBound) / 2].value)))
-	{
-		if(value > (array[(lowBound + highBound) / 2].value))
-			lowBound = (lowBound + highBound) / 2;
-		else
-			highBound = (lowBound + highBound) / 2;
-	}
-	return (lowBound + highBound) / 2;
+	int i = start;
+	while(array[i].value<value)
+        i++;
+
+	return i;
 }
 
 
@@ -189,6 +188,7 @@ SP_BPQUEUE_MSG spBPQueueEnqueue(SPBPQueue* source, int index, double value)
 	{
 		if(spBPQueueIsFull(source))
 			return SP_BPQUEUE_FULL;
+
 		if(MaxIndex(source) == source->capacity - 1)
 		{
 			for(int i = source->MinIndex ; i <= source->capacity-1 ; i++)
@@ -198,13 +198,13 @@ SP_BPQUEUE_MSG spBPQueueEnqueue(SPBPQueue* source, int index, double value)
 				source->elements[i - 1] = source->elements[i];
 			}
 			source->MinIndex--;
-			source->size++;
 			source->elements[source->capacity - 1] = createElement(index,value);
 		}
 		else
 		{
 			source->elements[insertIndex] = createElement(index,value);
 		}
+		source->size++;
 		return SP_BPQUEUE_SUCCESS;
 	}
 
