@@ -159,12 +159,12 @@ void spBPQueueDestroy(SPBPQueue* source)
  */
 int findPlace(BPQueueElement* array, int start, int end, double value,int idx)
 {
-	if(value <= array[start].value)
+	if(value < array[start].value)
 		return start-1;
 	if(value > array[end].value)
 		return end + 1;
 	int i = start;
-	while(array[i].value<value)
+	while(i < end+1 && array[i].value<value)
         i++;
     while(i < end + 1 && array[i].value == value && array[i].index < idx)
         i++;
