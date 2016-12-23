@@ -166,7 +166,7 @@ int findPlace(BPQueueElement* array, int start, int end, double value,int idx)
 	int i = start;
 	while(array[i].value<value)
         i++;
-    while(array[i].value == value && array[i].index < idx)
+    while(i < end + 1 && array[i].value == value && array[i].index < idx)
         i++;
 	return i;
 }
