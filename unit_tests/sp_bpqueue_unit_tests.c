@@ -75,9 +75,10 @@ bool testBPQPeek() {
 	return true;
 }
 
-//int main() {
-//	RUN_TEST(testBPQCopy);
-//	RUN_TEST(testBPQClear);
-//	RUN_TEST(testBPQPeek);
-//	return 0;
-//}
+int main()
+{
+	RUN_TEST(testBPQCopy);
+	RUN_TEST(testBPQClear);
+	RUN_TEST(testBPQPeek);
+	return 0;
+}
