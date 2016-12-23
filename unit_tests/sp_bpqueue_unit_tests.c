@@ -60,17 +60,16 @@ bool testBPQPeek() {
 	spBPQueuePeek(queue, &element);
 	ASSERT_TRUE(element.index == 1574);
 	ASSERT_TRUE(element.value == 254);
+	spBPQueueDequeue(queue);
 	spBPQueuePeek(queue, &element);
-	ASSERT_TRUE(element.index == 1574);
-	ASSERT_TRUE(element.value == 254);
+	ASSERT_TRUE(element.index == 2056);
+	ASSERT_TRUE(element.value == 610);
 	spBPQueuePeekLast(queue, &element);
 	ASSERT_TRUE(element.index == 2212);
 	ASSERT_TRUE(element.value == 3316);
-	spBPQueueDequeue(queue);
 	spBPQueuePeekLast(queue, &element);
-	printf("%d %f",element.index, element.value);
-	ASSERT_TRUE(element.index == 3339);
-	ASSERT_TRUE(element.value == 1114);
+	ASSERT_TRUE(element.index == 2212);
+	ASSERT_TRUE(element.value == 3316);
 
 	spBPQueueDestroy(queue);
 	return true;
