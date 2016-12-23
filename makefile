@@ -8,7 +8,7 @@ COMP_FLAG = -std=c99 -Wall -Wextra \
 $(EXEC): $(OBJS)
 	$(CC) $(OBJS) -o $@
 main.o: main.c main_aux.h SPPoint.h SPBPriorityQueue.h
-	$(CC) $(COMP_FLAG) -c $(TESTS_DIR)/$*.c
+	$(CC) $(COMP_FLAG) -c $*.c
 main_aux.o: main_aux.c main_aux.h
 	$(CC) $(COMP_FLAG) -c $*.c
 SPPoint.o: SPPoint.c SPPoint.h 

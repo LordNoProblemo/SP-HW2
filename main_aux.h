@@ -10,14 +10,6 @@
 #include "SPPoint.h"
 #include "SPBPriorityQueue.h"
 
-/**
- * A function which collects all the needed data from user
- * @param points - An element for holding all the points (except q) the user enters.
- * @param q - The query point.
- * @param k - An element for holding the parameter k from user.
- * @return n - the number of points in points.
- */
-int getDataFromUser (SPPoint** points, SPPoint* q, int* k);
 
 /**
  * Creates BPQ whose indices are the indices of points and values are the distance between points and q

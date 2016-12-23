@@ -2,26 +2,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int getDataFromUser(SPPoint** points, SPPoint* q, int* k)
-{
-	int n, d;
-	scanf("%d %d %d", &n, &d, k);
-	double * data = (double *) malloc(d * sizeof(double));
-	points = (SPPoint **) malloc(n * sizeof(SPPoint*));
-	for (int i = 0; i < n; i++)
-	{
-		for (int j = 0; j < d; j++)
-			scanf("%lf", &data[j]);
-		points[i] = spPointCreate(data, d, i + 1);
-	}
-	for (int j = 0; j < d; j++)
-		scanf("%lf", &data[j]);
-	q = spPointCreate(data, d, 3316);
-	free(data);
-
-	return n;
-}
-
 SPBPQueue* createQueueFromPoints(SPPoint** points, int n, SPPoint* q)
 {
 	SPBPQueue* queue = spBPQueueCreate(n);

@@ -7,6 +7,7 @@
 
 #include "main_aux.h"
 #include <stdlib.h>
+#include <stdio.h>
 
 int main()
 {
