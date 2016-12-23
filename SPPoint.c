@@ -63,8 +63,7 @@ double spPointL2SquaredDistance(SPPoint* p, SPPoint* q)
 {
 	assert (p!=NULL && q!=NULL && p->dim == p->dim);
 	double l2 = 0;
-	int i = 0;
-	for(i = 0; i < p->dim; i++)
+	for(int i = 0; i < p->dim; i++)
 	{
 		double dist = p->data[i] - q->data[i]; //distance between p and q in axis i
 		l2 += dist * dist;
