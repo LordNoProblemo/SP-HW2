@@ -157,16 +157,17 @@ void spBPQueueDestroy(SPBPQueue* source)
  * @return
  * The index i for which is the place of the new element
  */
-int findPlace(BPQueueElement* array, int start, int end, double value)
+int findPlace(BPQueueElement* array, int start, int end, double value,int idx)
 {
 	if(value <= array[start].value)
 		return start-1;
-	if(value >= array[end].value)
+	if(value > array[end].value)
 		return end + 1;
 	int i = start;
 	while(array[i].value<value)
         i++;
-
+    while(array[i].value == value && array[i].index < idx)
+        i++;
 	return i;
 }
 
@@ -183,7 +184,7 @@ SP_BPQUEUE_MSG spBPQueueEnqueue(SPBPQueue* source, int index, double value)
 		source->elements[0] = createElement(index,value);
 		return SP_BPQUEUE_SUCCESS;
 	}
-	int insertIndex = findPlace(source->elements,source->MinIndex,MaxIndex(source),value);
+	int insertIndex = findPlace(source->elements,source->MinIndex,MaxIndex(source),value, index);
 	if(insertIndex > MaxIndex(source))
 	{
 		if(spBPQueueIsFull(source))

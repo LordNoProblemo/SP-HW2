@@ -7,7 +7,7 @@ SPBPQueue* createQueueFromPoints(SPPoint** points, int n, SPPoint* q)
 	SPBPQueue* queue = spBPQueueCreate(n);
 	for (int i = 0; i < n; i++)
 	{
-		int dist = spPointL2SquaredDistance(points[i], q);
+		double dist = spPointL2SquaredDistance(points[i], q);
 		int idx = spPointGetIndex(points[i]);
 		spBPQueueEnqueue(queue, idx, dist);
 	}
