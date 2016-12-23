@@ -122,7 +122,7 @@ SP_BPQUEUE_MSG spBPQueuePeekLast(SPBPQueue* source, BPQueueElement* res);
  * @param source - queue
  * @assert source != NULL and source is not empty
  * @return
- * The minimum value in queue sorce
+ * The minimum value in queue source
  */
 double spBPQueueMinValue(SPBPQueue* source);
 
@@ -130,7 +130,7 @@ double spBPQueueMinValue(SPBPQueue* source);
  * @param source - queue
  * @assert source != NULL and source is not empty
  * @return
- * The maximum value in queue sorce
+ * The maximum value in queue source
  */
 double spBPQueueMaxValue(SPBPQueue* source);
 
