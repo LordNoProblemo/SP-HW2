@@ -55,7 +55,7 @@ int spPointGetIndex(SPPoint* point)
 
 double spPointGetAxisCoor(SPPoint* point, int axis)
 {
-	assert (point!=NULL && axis < point->dim);
+	assert (point!=NULL && axis < point->dim && axis >= 0);
 	return point->data[axis];
 }
 
