@@ -105,7 +105,7 @@ SP_BPQUEUE_MSG spBPQueueDequeue(SPBPQueue* source);
  * @param source - the queue
  * @param res - the element which will hold the copy of element with min value
  * @return
- * SP_BPQUEUE_EMPTY if source is empty,SP_BPQUEUE_INVALID_ARGUMENT if source==NULL, SP_BPQUEUE_INVALID_SUCCESS else
+ * SP_BPQUEUE_EMPTY if source is empty,SP_BPQUEUE_INVALID_ARGUMENT if source==NULL, SP_BPQUEUE_SUCCESS else
  */
 SP_BPQUEUE_MSG spBPQueuePeek(SPBPQueue* source, BPQueueElement* res);
 
@@ -114,7 +114,7 @@ SP_BPQUEUE_MSG spBPQueuePeek(SPBPQueue* source, BPQueueElement* res);
  * @param source - the queue
  * @param res - the element which will hold the copy of element with max value
  * @return
- * SP_BPQUEUE_EMPTY if source is empty,SP_BPQUEUE_INVALID_ARGUMENT if source==NULL, SP_BPQUEUE_INVALID_SUCCESS else
+ * SP_BPQUEUE_EMPTY if source is empty,SP_BPQUEUE_INVALID_ARGUMENT if source==NULL, SP_BPQUEUE_SUCCESS else
  */
 SP_BPQUEUE_MSG spBPQueuePeekLast(SPBPQueue* source, BPQueueElement* res);
 
