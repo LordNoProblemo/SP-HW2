@@ -1,7 +1,6 @@
 CC = gcc
 OBJS = main.o main_aux.o SPPoint.o SPBPriorityQueue.o
 EXEC = ex2
-TESTS_DIR = ./unit_tests
 COMP_FLAG = -std=c99 -Wall -Wextra \
 -Werror -pedantic-errors
 
